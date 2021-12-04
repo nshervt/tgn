@@ -165,6 +165,7 @@ for i in range(args.n_runs):
 
     num_instance = len(train_data.sources)
     num_batch = math.ceil(num_instance / BATCH_SIZE)
+    print('num_instance : {}, num_batch : {}'.format(num_instance, num_batch))
 
     logger.info('num of training instances: {}'.format(num_instance))
     logger.info('num of batches per epoch: {}'.format(num_batch))
@@ -191,6 +192,7 @@ for i in range(args.n_runs):
 
         logger.info('start {} epoch'.format(epoch))
         for k in range(0, num_batch, args.backprop_every):
+            print('k: ', k)
             loss = 0
             optimizer.zero_grad()
 
@@ -203,8 +205,8 @@ for i in range(args.n_runs):
 
                 start_idx = batch_idx * BATCH_SIZE
                 end_idx = min(num_instance, start_idx + BATCH_SIZE)
-                sources_batch, destinations_batch = train_data.sources[start_idx:end_idx], \
-                                                    train_data.destinations[start_idx:end_idx]
+                sources_batch = train_data.sources[start_idx:end_idx]
+                destinations_batch = train_data.destinations[start_idx:end_idx]
                 edge_idxs_batch = train_data.edge_idxs[start_idx: end_idx]
                 timestamps_batch = train_data.timestamps[start_idx:end_idx]
 
